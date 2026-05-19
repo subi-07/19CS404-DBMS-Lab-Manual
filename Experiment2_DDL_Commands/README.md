@@ -104,124 +104,228 @@ CREATE TABLE Table_Name (
 ```
 
 **Question 1**
---
--- Paste Question 1 here
 
-```sql
--- Paste your SQL code below for Question 1
-```
+~~~
+Insert the below data into the Employee table, allowing the Department and Salary columns to take their default values.
+
+EmployeeID  Name         Position
+----------  -----------  ----------
+4           Emily White  Analyst
+
+Note: The Department and Salary columns will use their default values
+~~~
+~~~
+insert into
+Employee(EmployeeID,Name,Position)
+values(4,'Emily White','Analyst');
+~~~
 
 **Output:**
 
-![Output1](output.png)
+![image](https://github.com/user-attachments/assets/970d602e-1349-463f-b99f-3c0beed0b324)
 
 **Question 2**
----
--- Paste Question 2 here
 
-```sql
--- Paste your SQL code below for Question 2
+```
+Write an SQL query to add two new columns, first_name and last_name, to the table employee. Both columns should have a data type of varchar(50).
 ```
 
+~~~
+ALTER TABLE employee
+ADD COLUMN first_name varchar(50);
+
+ALTER TABLE employee
+ADD COLUMN last_name varchar(50);
+~~~
 **Output:**
 
-![Output2](output.png)
+![image](https://github.com/user-attachments/assets/51775885-79c4-4aa3-912c-c06bf9c8009f)
 
 **Question 3**
----
--- Paste Question 3 here
 
-```sql
--- Paste your SQL code below for Question 3
 ```
+Create a new table named products with the following specifications:
+product_id as INTEGER and primary key.
+product_name as TEXT and not NULL.
+list_price as DECIMAL (10, 2) and not NULL.
+discount as DECIMAL (10, 2) with a default value of 0 and not NULL.
+A CHECK constraint at the table level to ensure:
+list_price is greater than or equal to discount
+discount is greater than or equal to 0
+list_price is greater than or equal to 0
+```
+
+~~~
+create table products(
+product_id INTEGER primary key,
+product_name TEXT not null,
+list_price DECIMAL(10,2) not null
+check(list_price>=discount and
+list_price>=0),
+discount DECIMAL(10,2) default 0 not 
+null check(discount>=0));
+~~~
 
 **Output:**
 
-![Output3](output.png)
+![image](https://github.com/user-attachments/assets/04e98da3-4146-4af3-8894-981856e6cc18)
 
 **Question 4**
----
--- Paste Question 4 here
 
-```sql
--- Paste your SQL code below for Question 4
 ```
+Insert all books from Out_of_print_books into Books
+Table attributes are ISBN, Title, Author, Publisher, YearPublished
+```
+
+~~~
+INSERT into Books
+SELECT ISBN, Title, Author, Publisher, YearPublished
+FROM  Out_of_print_books;
+~~~
 
 **Output:**
 
-![Output4](output.png)
+![image](https://github.com/user-attachments/assets/f61b83eb-03f6-45c9-b391-489e771ba55b)
 
 **Question 5**
----
--- Paste Question 5 here
 
-```sql
--- Paste your SQL code below for Question 5
 ```
+Create a table named Tasks with the following columns:
+
+TaskID as INTEGER
+TaskName as TEXT
+DueDate as DATE
+```
+
+~~~
+create table Tasks(
+TaskID INTEGER,
+TaskName TEXT,
+DueDate DATE);
+~~~
 
 **Output:**
 
-![Output5](output.png)
+
+![image](https://github.com/user-attachments/assets/986ee815-ecba-48c5-9fda-6d9368069223)
 
 **Question 6**
----
--- Paste Question 6 here
 
-```sql
--- Paste your SQL code below for Question 6
 ```
+Create a table named Bonuses with the following constraints:
+BonusID as INTEGER should be the primary key.
+EmployeeID as INTEGER should be a foreign key referencing Employees(EmployeeID).
+BonusAmount as REAL should be greater than 0.
+BonusDate as DATE.
+Reason as TEXT should not be NULL.
+```
+
+~~~
+create table Bonuses(
+BonusID INTEGER primary key,
+EmployeeID INTEGER,
+BonusAmount REAL check(BonusAmount>0),
+BonusDate DATE,
+Reason TEXT not null,
+foreign key(EmployeeID) references Employees(EmployeeID));
+~~~
 
 **Output:**
 
-![Output6](output.png)
+
+![image](https://github.com/user-attachments/assets/aa782fce-6239-4d65-98c9-3dd9b6881ec0)
 
 **Question 7**
----
--- Paste Question 7 here
 
-```sql
--- Paste your SQL code below for Question 7
 ```
+Create a table named Invoices with the following constraints:
+InvoiceID as INTEGER should be the primary key.
+InvoiceDate as DATE.
+Amount as REAL should be greater than 0.
+DueDate as DATE should be greater than the InvoiceDate.
+OrderID as INTEGER should be a foreign key referencing Orders(OrderID).
+```
+
+~~~
+create table Invoices(
+InvoiceID INTEGER primary key,
+InvoiceDate DATE,
+Amount REAL check(Amount>0),
+DueDate DATE check(DueDate>InvoiceDate),
+OrderID INTEGER,
+foreign key (OrderID) references Orders(OrderID));
+~~~
+
 
 **Output:**
 
-![Output7](output.png)
+![image](https://github.com/user-attachments/assets/897ae6fe-833f-42d4-a53f-7c583132ba33)
 
 **Question 8**
----
--- Paste Question 8 here
 
-```sql
--- Paste your SQL code below for Question 8
 ```
+Create a table named Members with the following columns:
+
+MemberID as INTEGER
+MemberName as TEXT
+JoinDate as DATE
+```
+
+~~~
+create table Members(
+MemberID INTEGER,
+MemberName TEXT,
+JoinDate DATE
+
+);
+~~~
 
 **Output:**
 
-![Output8](output.png)
+
+![image](https://github.com/user-attachments/assets/2450ed0a-7beb-4d26-9aca-09bc6f76bfa0)
 
 **Question 9**
----
--- Paste Question 9 here
 
-```sql
--- Paste your SQL code below for Question 9
 ```
+Write a SQL query to add birth_date attribute as timestamp (datatype) in the table customer 
+
+Sample table: customer
+
+ customer_id |   cust_name    |    city    | grade | salesman_id 
+-------------+----------------+------------+-------+-------------
+        3002 | Nick Rimando   | New York   |   100 |        5001
+        3007 | Brad Davis     | New York   |   200 |        5001
+        3005 | Graham Zusi    | California |   200 |        5002
+```
+
+~~~
+alter table customer
+add column birth_date timestamp;
+~~~
 
 **Output:**
 
-![Output9](output.png)
+![image](https://github.com/user-attachments/assets/66910008-cafe-4a31-bf5f-c4249120a895)
 
 **Question 10**
----
--- Paste Question 10 here
 
-```sql
--- Paste your SQL code below for Question 10
-```
+~~~
+Insert the below data into the Student_details table, allowing the Subject and MARKS columns to take their default values.
 
+RollNo      Name          Gender      
+----------  ------------  ----------  
+204         Samuel Black  M          
+
+Note: The Subject and MARKS columns will use their default values.
+~~~
+~~~
+insert into Student_details(RollNo,Name,Gender)
+values(204,"Samuel Black","M");
+~~~
 **Output:**
 
-![Output10](output.png)
+![image](https://github.com/user-attachments/assets/60f0f390-bc54-4beb-ab01-b3da4accc577)
 
 
 ## RESULT
