@@ -22,31 +22,39 @@ FlexiFit Gym wants a database to manage its members, trainers, and fitness progr
 - Payments tracked for memberships and sessions.
 
 ### ER Diagram:
-*Paste or attach your diagram here*  
-![ER Diagram](er_diagram_fitness.png)
+<img width="871" height="981" alt="Untitled Diagram1 drawio" src="https://github.com/user-attachments/assets/03b6f415-2513-4ac0-ba93-ac28a7a2dec3" />
+
 
 ### Entities and Attributes
 
 | Entity | Attributes (PK, FK) | Notes |
 |--------|--------------------|-------|
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
+|  Trainer      |   Trainer_ID, Trainer_Name                 |       |
+|  Member      |   Member_ID, Member_Name, Membership_type                 |       |
+| Fitness_Program       | Yoga, Zumba, Weight_Training                   |       |
+|  Session       |  Session_ID, Attendance                  |       |
+| Payment       |   Payment_ID, Amount                  |       |
 
 ### Relationships and Constraints
 
 | Relationship | Cardinality | Participation | Notes |
 |--------------|------------|---------------|-------|
-|              |            |               |       |
-|              |            |               |       |
-|              |            |               |       |
+| Trainers ↔ Members              | many-to-many           |  book             |       |
+|  Members ↔ Fitness_Program             | many-to-many           | enroll              |       |
+| Trainers ↔ Fitness_Program              |   many-to-many         |  assigned to             |       |
+| Trainers ↔ Session                | one-to-many        |   conducted by            |          |
+|    Session ↔ Payment              |  one-to-one           |generates            |        |
 
 ### Assumptions
-- 
-- 
-- 
+Each member and trainer has a unique ID.
+
+A member can enroll in more than one fitness program.
+
+A trainer can handle multiple sessions and programs.
+
+Each session is conducted by one trainer and records attendance.
+
+Each session generates one payment with a fixed amount.
 
 ---
 
@@ -64,33 +72,41 @@ The Central Library wants to manage book lending and cultural events.
 - Overdue fines apply for late returns.
 
 ### ER Diagram:
-*Paste or attach your diagram here*  
-![ER Diagram](er_diagram_library.png)
+<img width="801" height="931" alt="Untitled Diagram2 drawio" src="https://github.com/user-attachments/assets/4329eb43-4d08-4285-afc6-0b2ee60d2578" />
+
 
 ### Entities and Attributes
 
 | Entity | Attributes (PK, FK) | Notes |
 |--------|--------------------|-------|
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
+|  Member       |  Member_ID, Member_Name, Phone_no                  |       |
+| Book       | Book_ID, Title, Author                   |       |
+| Loan        | Loan_ID, Loan_Date, Return_Date                    |       |
+|  Event      | Event_ID, Event_Name, Event_Date                    |       |
+|  Speaker       | Speaker_ID, Speaker_Name, Expertise                   |       |
+| Room        |  Room_no, Capacity, Purpose                  |       |
+
 
 ### Relationships and Constraints
 
 | Relationship | Cardinality | Participation | Notes |
 |--------------|------------|---------------|-------|
-|              |            |               |       |
-|              |            |               |       |
-|              |            |               |       |
+| Member ↔ Book              | many-to-many           |Borrows               |       |
+|  Member ↔ Event             |  many-to-many          |  Register             |       |
+| Member ↔ Loan              |  one-to-many          |   has            |       |
+|  Event ↔ Speaker                        |  many-to-many                 |  has              |           |
+|  Event ↔ Room                         |   many-to-one                |   Booked         |               |
 
 ### Assumptions
-- 
-- 
-- 
+Each member, book, event, loan, speaker, and room has a unique ID.
 
----
+A member can borrow multiple books, but a book is borrowed by one member at a time.
+
+A loan record is created for each book borrowed, with loan and return dates.
+
+A member can register for multiple events, and each event can have many members.
+
+Each event is conducted in one room and can have multiple speakers.
 
 # Scenario C: Restaurant Table Reservation & Ordering
 
@@ -106,33 +122,40 @@ A popular restaurant wants to manage reservations, orders, and billing.
 - Waiters assigned to serve reservations.
 
 ### ER Diagram:
-*Paste or attach your diagram here*  
-![ER Diagram](er_diagram_restaurant.png)
+<img width="801" height="821" alt="Untitled Diagram3 drawio" src="https://github.com/user-attachments/assets/d663fde4-81b4-43ea-8799-c054b40e674b" />
+
 
 ### Entities and Attributes
 
 | Entity | Attributes (PK, FK) | Notes |
 |--------|--------------------|-------|
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
-|        |                    |       |
+| Customer        |  Customer_ID, Customer_Name, Phone_no                  |       |
+|  Orders       |  Order_ID, Starter, Main, Dessert                  |       |
+| Reservation        |  Reservation_ID, Date, Time                  |       |
+| Table        |  Table_ID, Location, Capacity                   |       |
+| Waiters       |  Waiter_ID, Name                  |       |
+| Bill        | Bill_ID, Total_Amount                   |       |
 
 ### Relationships and Constraints
 
 | Relationship | Cardinality | Participation | Notes |
 |--------------|------------|---------------|-------|
-|              |            |               |       |
-|              |            |               |       |
-|              |            |               |       |
+| Customer  - Orders           |   one-to-many         |    places             |       |
+|  Customer  -Reservation           |  one-to-many           |  makes               |       |
+|  Reservation -  Table         |  many-to-one          |   reserves              |       |
+|  Reservation - Waiters          |   many-to-one            | serves              |       |
+| Reservation  - Bill           |    many-to-one           |  generates              |       |
 
 ### Assumptions
-- 
-- 
-- 
+Each customer, order, reservation, table, waiter, and bill has a unique ID.
 
----
+A customer can place multiple orders, but each order belongs to one customer.
+
+A customer can make multiple reservations, and each reservation is for one table.
+
+Each reservation is served by one waiter.
+
+Each reservation generates one bill with a total amount.
 
 ## Instructions for Students
 
