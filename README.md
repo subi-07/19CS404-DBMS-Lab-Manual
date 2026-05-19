@@ -1,46 +1,166 @@
-# DBMS Laboratory Manual Submission
+# ER Diagram Workshop – Submission Template
 
-## 🎓 Course: 19CS404 Database Management System and its Applications  
-## 🧑‍🏫 Instructor: Ms. G Abinaya 
+## Objective
+To understand and apply ER modeling concepts by creating ER diagrams for real-world applications.
 
-![image](https://github.com/user-attachments/assets/7e6f9751-b530-4526-9a3d-8e322e3b2e6d)
+## Purpose
+Gain hands-on experience in designing ER diagrams that represent database structure including entities, relationships, attributes, and constraints.
 
-### 📝 Instructions for Students
+---
 
-1. Fork this repository to your GitHub profile.
-2. For each experiment:
-   SQL queries based on questions generated randomly from Moodle.
-   - Complete the question on Moodle.
-   - Each experiment folder contains **two Markdown files**
-     1. `README.md`
+# Scenario A: City Fitness Club Management
 
-        This file contains:
-         - 🎯 **Aim**
-         - 📚 **Theory**
-         - 📝 **Result**
-        
-        You **do not need to edit** this file unless instructed.
-      3. `output.md`
+**Business Context:**  
+FlexiFit Gym wants a database to manage its members, trainers, and fitness programs.
 
-         You **must update this file** with your answers and outputs.
-         For each of the 10 Moodle-generated questions:
-         - Paste the **question**
-         - Write the **SQL query** inside the code block
-         - Paste a **screenshot or terminal output** below it
-3. Commit and push your changes.
-4. Create a pull request to the original repository
+**Requirements:**  
+- Members register with name, membership type, and start date.  
+- Each member can join multiple programs (Yoga, Zumba, Weight Training).  
+- Trainers assigned to programs; a program may have multiple trainers.  
+- Members may book personal training sessions with trainers.  
+- Attendance recorded for each session.  
+- Payments tracked for memberships and sessions.
 
-### ✅ Experiments List
+### ER Diagram:
+<img width="871" height="981" alt="Untitled Diagram1 drawio" src="https://github.com/user-attachments/assets/03b6f415-2513-4ac0-ba93-ac28a7a2dec3" />
 
-| Exp No | Title                          | Module Based? |
-|--------|--------------------------------|---------------|
-| 1      | ER Diagram                     | No            |
-| 2      | DDL Commands                   | Yes           |
-| 3      | DML Commands                   | Yes           |
-| 4      | Aggregate, GROUP BY, HAVING   | Yes           |
-| 5      | Subqueries and Views          | Yes           |
-| 6      | Joins                         | Yes           |
-| 7      | Pl/sql                        | No            |
-| 8      | Procedures, Functions         | No            |
-| 9      | Cursors, Exception Handling   | No            |
-| 10     | Triggers                      | No            |
+
+### Entities and Attributes
+
+| Entity | Attributes (PK, FK) | Notes |
+|--------|--------------------|-------|
+|  Trainer      |   Trainer_ID, Trainer_Name                 |       |
+|  Member      |   Member_ID, Member_Name, Membership_type                 |       |
+| Fitness_Program       | Yoga, Zumba, Weight_Training                   |       |
+|  Session       |  Session_ID, Attendance                  |       |
+| Payment       |   Payment_ID, Amount                  |       |
+
+### Relationships and Constraints
+
+| Relationship | Cardinality | Participation | Notes |
+|--------------|------------|---------------|-------|
+| Trainers ↔ Members              | many-to-many           |  book             |       |
+|  Members ↔ Fitness_Program             | many-to-many           | enroll              |       |
+| Trainers ↔ Fitness_Program              |   many-to-many         |  assigned to             |       |
+| Trainers ↔ Session                | one-to-many        |   conducted by            |          |
+|    Session ↔ Payment              |  one-to-one           |generates            |        |
+
+### Assumptions
+Each member and trainer has a unique ID.
+
+A member can enroll in more than one fitness program.
+
+A trainer can handle multiple sessions and programs.
+
+Each session is conducted by one trainer and records attendance.
+
+Each session generates one payment with a fixed amount.
+
+---
+
+# Scenario B: City Library Event & Book Lending System
+
+**Business Context:**  
+The Central Library wants to manage book lending and cultural events.
+
+**Requirements:**  
+- Members borrow books, with loan and return dates tracked.  
+- Each book has title, author, and category.  
+- Library organizes events; members can register.  
+- Each event has one or more speakers/authors.  
+- Rooms are booked for events and study.  
+- Overdue fines apply for late returns.
+
+### ER Diagram:
+<img width="801" height="931" alt="Untitled Diagram2 drawio" src="https://github.com/user-attachments/assets/4329eb43-4d08-4285-afc6-0b2ee60d2578" />
+
+
+### Entities and Attributes
+
+| Entity | Attributes (PK, FK) | Notes |
+|--------|--------------------|-------|
+|  Member       |  Member_ID, Member_Name, Phone_no                  |       |
+| Book       | Book_ID, Title, Author                   |       |
+| Loan        | Loan_ID, Loan_Date, Return_Date                    |       |
+|  Event      | Event_ID, Event_Name, Event_Date                    |       |
+|  Speaker       | Speaker_ID, Speaker_Name, Expertise                   |       |
+| Room        |  Room_no, Capacity, Purpose                  |       |
+
+
+### Relationships and Constraints
+
+| Relationship | Cardinality | Participation | Notes |
+|--------------|------------|---------------|-------|
+| Member ↔ Book              | many-to-many           |Borrows               |       |
+|  Member ↔ Event             |  many-to-many          |  Register             |       |
+| Member ↔ Loan              |  one-to-many          |   has            |       |
+|  Event ↔ Speaker                        |  many-to-many                 |  has              |           |
+|  Event ↔ Room                         |   many-to-one                |   Booked         |               |
+
+### Assumptions
+Each member, book, event, loan, speaker, and room has a unique ID.
+
+A member can borrow multiple books, but a book is borrowed by one member at a time.
+
+A loan record is created for each book borrowed, with loan and return dates.
+
+A member can register for multiple events, and each event can have many members.
+
+Each event is conducted in one room and can have multiple speakers.
+
+# Scenario C: Restaurant Table Reservation & Ordering
+
+**Business Context:**  
+A popular restaurant wants to manage reservations, orders, and billing.
+
+**Requirements:**  
+- Customers can reserve tables or walk in.  
+- Each reservation includes date, time, and number of guests.  
+- Customers place food orders linked to reservations.  
+- Each order contains multiple dishes; dishes belong to categories (starter, main, dessert).  
+- Bills generated per reservation, including food and service charges.  
+- Waiters assigned to serve reservations.
+
+### ER Diagram:
+<img width="801" height="821" alt="Untitled Diagram3 drawio" src="https://github.com/user-attachments/assets/d663fde4-81b4-43ea-8799-c054b40e674b" />
+
+
+### Entities and Attributes
+
+| Entity | Attributes (PK, FK) | Notes |
+|--------|--------------------|-------|
+| Customer        |  Customer_ID, Customer_Name, Phone_no                  |       |
+|  Orders       |  Order_ID, Starter, Main, Dessert                  |       |
+| Reservation        |  Reservation_ID, Date, Time                  |       |
+| Table        |  Table_ID, Location, Capacity                   |       |
+| Waiters       |  Waiter_ID, Name                  |       |
+| Bill        | Bill_ID, Total_Amount                   |       |
+
+### Relationships and Constraints
+
+| Relationship | Cardinality | Participation | Notes |
+|--------------|------------|---------------|-------|
+| Customer  - Orders           |   one-to-many         |    places             |       |
+|  Customer  -Reservation           |  one-to-many           |  makes               |       |
+|  Reservation -  Table         |  many-to-one          |   reserves              |       |
+|  Reservation - Waiters          |   many-to-one            | serves              |       |
+| Reservation  - Bill           |    many-to-one           |  generates              |       |
+
+### Assumptions
+Each customer, order, reservation, table, waiter, and bill has a unique ID.
+
+A customer can place multiple orders, but each order belongs to one customer.
+
+A customer can make multiple reservations, and each reservation is for one table.
+
+Each reservation is served by one waiter.
+
+Each reservation generates one bill with a total amount.
+
+## Instructions for Students
+
+1. Complete **all three scenarios** (A, B, C).  
+2. Identify entities, relationships, and attributes for each.  
+3. Draw ER diagrams using **draw.io / diagrams.net** or hand-drawn & scanned.  
+4. Fill in all tables and assumptions for each scenario.  
+5. Export the completed Markdown (with diagrams) as **a single PDF**
